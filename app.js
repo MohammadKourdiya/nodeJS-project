@@ -3,7 +3,7 @@ const app = express();
 const port = 3000;
 app.use(express.urlencoded({ extended: true }));
 const mongoose = require("mongoose");
-const Mydata = require("./modals/myDataSchema");
+const customer = require("./modals/customerSchema");
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
@@ -23,6 +23,21 @@ liveReloadServer.server.once("connection", () => {
 });
 //==!!AUTO REFRESH!!==//
 
+//---GET REQUESTS---//
+app.get("/", (req, res) => {
+  console.log("first");
+  customer
+    .find()
+    .then((result) => {
+      res.render("index", { arr: result });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+//---!!GET REQUESTS!!---//
+
 //---RENDER BOOTSTRAP DESİGNS---//
 app.get("/", (req, res) => {
   res.render("index", {});
@@ -41,6 +56,22 @@ app.get("/user/edit.html", (req, res) => {
 });
 
 //---!!!RENDER BOOTSTRAP DESİGNS!!!---//
+
+//---POST REQUESTS---//
+app.post("/user/add.html", (req, res) => {
+  console.log(req.body);
+
+  const Customer = new customer(req.body);
+  Customer.save()
+    .then(() => {
+      res.redirect("/");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+//---!!POST REQUESTS!!---//
 
 //---CONECCT MONGO DB---//
 mongoose
