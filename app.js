@@ -23,6 +23,9 @@ liveReloadServer.server.once("connection", () => {
 });
 //==!!AUTO REFRESH!!==//
 
+
+
+
 //---GET REQUESTS---//
 app.get("/", (req, res) => {
   console.log("first");
