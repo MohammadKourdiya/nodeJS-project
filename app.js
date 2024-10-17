@@ -7,6 +7,15 @@ const customer = require("./modals/customerSchema");
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
+
+
+
+
+
+
+
+
+
 //==AUTO REFRESH==//
 const path = require("path");
 const livereload = require("livereload");
