@@ -56,7 +56,7 @@ const user_delete = (req, res) => {
   customer
     .findByIdAndDelete(req.params.id)
     .then(() => {
-      res.redirect("/");
+      res.redirect("/home");
     })
     .catch((err) => {
       console.log(err);
@@ -68,7 +68,7 @@ const user_edit_put = (req, res) => {
   customer
     .findByIdAndUpdate(req.params.id, req.body)
     .then(() => {
-      res.redirect("/");
+      res.redirect("/home");
     })
     .catch((err) => {
       console.log(err);
@@ -83,7 +83,7 @@ const user_add_post = (req, res) => {
   customer
     .create(req.body)
     .then(() => {
-      res.redirect("/");
+      res.redirect("/home");
     })
     .catch((err) => {
       console.log(err);
