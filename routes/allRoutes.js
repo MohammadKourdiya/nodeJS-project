@@ -4,19 +4,16 @@ const moment = require("moment");
 const customer = require("../modals/customerSchema");
 const userController = require("../controllers/userController");
 
-
 //Level2
-router.get("/",(req,res)=>{
-    res.render("wellcome")
-})
+router.get("/", (req, res) => {
+  res.render("wellcome");
+});
 
-
-
-
-
+router.get("/login", (req, res) => {
+  res.render("auth/login.ejs");
+});
 
 //Level1
-
 
 router.get("/home", userController.user_index_get);
 
