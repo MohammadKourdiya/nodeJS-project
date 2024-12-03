@@ -4,7 +4,21 @@ const moment = require("moment");
 const customer = require("../modals/customerSchema");
 const userController = require("../controllers/userController");
 
-router.get("/", userController.user_index_get);
+
+//Level2
+router.get("/",(req,res)=>{
+    res.render("wellcome")
+})
+
+
+
+
+
+
+//Level1
+
+
+router.get("/home", userController.user_index_get);
 
 router.get("/view/:id", userController.user_view_get);
 
