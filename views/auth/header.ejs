@@ -1,10 +1,11 @@
 <header class=" mb-auto justify-content-betwee">
-    <div class="d-flex justify-content-between align-items-center">
-      <h3 class="float-md-start mb-0">Cover</h3>
-      <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="fw-bold py-1" href="/login">Login</a>
-        <a class="fw-bold py-1" href="/signup">Sign Up</a>
-      </nav>
-      
-    </div>
-  </header>
+  <div class="d-flex justify-content-between align-items-center">
+    <h3 class="float-md-start mb-0 btn fs-1 text-white fw-bold">Cover</h3>
+    <nav class="nav nav-masthead justify-content-center float-md-end">
+      <a class="fw-bold py-1 btn <%= currentPage ==" login" ?"btn-light":"btn-secondory" %>" href="/login">Login</a>
+      <a class="fw-bold py-1 btn <%= currentPage ==" signup" ?"btn-light":"btn-secondory" %>" %>" href="/signup">Sign
+        Up</a>
+    </nav>
+
+  </div>
+</header>

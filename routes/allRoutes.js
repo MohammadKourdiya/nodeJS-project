@@ -12,6 +12,9 @@ router.get("/", (req, res) => {
 router.get("/login", (req, res) => {
   res.render("auth/login.ejs");
 });
+router.get("/signup", (req, res) => {
+  res.render("auth/signup.ejs");
+});
 
 //Level1
 

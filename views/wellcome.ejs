@@ -76,8 +76,8 @@
 
 
         <div class="cover-container  d-flex w-100 h-100 p-3 mx-auto flex-column">
-            
-            <%- include('./auth/header.ejs') %>
+
+            <%- include('./auth/header.ejs',{currentPage:"false"}) %>
 
                 <main class="px-3">
                     <h1>Wellcome to my <span class="fw-bold">X-System😊</span></h1>
@@ -85,7 +85,7 @@
                         organization.The data management process aim to make sure the data in corporate systems is
                         accurate,available and accessible.</p>
                     <p class="lead">
-                        <a href="#" class="btn btn-lg btn-light fw-bold border-white bg-white">Learn more</a>
+                        <a href="/home" class="btn btn-lg btn-light fw-bold border-white bg-white">Dashboard</a>
                         <a href="#" class="btn btn-lg  fw-bold border-white ">Contact Sales</a>
                     </p>
 
