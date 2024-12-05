@@ -3,6 +3,7 @@ const router = express.Router();
 const moment = require("moment");
 const customer = require("../modals/customerSchema");
 const userController = require("../controllers/userController");
+const AuthUser = require("../modals/authUser");
 
 //Level2
 router.get("/", (req, res) => {
@@ -15,6 +16,27 @@ router.get("/login", (req, res) => {
 router.get("/signup", (req, res) => {
   res.render("auth/signup.ejs");
 });
+
+router.post("/signup", async (req, res) => {
+  try {
+    const result = await AuthUser.create(req.body);
+    console.log(result);
+    res.redirect("home");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//router.post("/signup", (req, res) => {
+//AuthUser.create(req.body)
+//    .then((result) => {
+//      res.redirect("/home");
+//    })
+//    .catch((err) => {
+//      console.log(err);
+//      alert(err);
+//    });
+//});
 
 //Level1
 
