@@ -27,6 +27,21 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+router.post("/login", async (req, res) => {
+  try {
+    const loginUser = await AuthUser.findOne({ email: req.body.email });
+    console.log(loginUser);
+
+    if (loginUser && loginUser.password == req.body.password) {
+      console.log("login successfully");
+    } else {
+      console.log("email or pass is wrong");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 //router.post("/signup", (req, res) => {
 //AuthUser.create(req.body)
 //    .then((result) => {
