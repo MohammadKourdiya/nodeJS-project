@@ -4,6 +4,7 @@ const moment = require("moment");
 const customer = require("../modals/customerSchema");
 const userController = require("../controllers/userController");
 const AuthUser = require("../modals/authUser");
+var jwt = require("jsonwebtoken");
 
 //Level2
 router.get("/", (req, res) => {
@@ -34,6 +35,9 @@ router.post("/login", async (req, res) => {
 
     if (loginUser && loginUser.password == req.body.password) {
       console.log("login successfully");
+      var token = jwt.sign({ id: loginUser._id }, "shhhhh");
+      res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
+      res.redirect("/home");
     } else {
       console.log("email or pass is wrong");
     }
