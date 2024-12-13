@@ -2,8 +2,20 @@
   <div class="d-flex justify-content-between align-items-center">
     <h3 class="float-md-start mb-0 btn fs-1 text-white fw-bold">Cover</h3>
     <nav class="nav nav-masthead justify-content-center float-md-end">
-      <a class="fw-bold py-1 btn <%= currentPage ==" login" ?"btn-light":"btn-secondory" %>" href="/login">Login</a>
-      <a class="fw-bold py-1 btn <%= currentPage ==" signup" ?"btn-light":"btn-secondory" %>" href="/signup">Sign Up</a>
+      <% if (user!==null) { %>
+        <div>
+          <%= user.email %>
+            <a class="fw-bold py-1 btn btn-light" href="/signup">Sign
+              out</a>
+        </div>
+
+        <% }else{ %>
+          <a class="fw-bold py-1 btn <%= currentPage ==" login" ?"btn-light":"btn-secondory" %>"
+            href="/login">Login</a>
+          <a class="fw-bold py-1 btn <%= currentPage ==" signup" ?"btn-light":"btn-secondory" %>" href="/signup">Sign
+            Up</a>
+          <% } %>
+
     </nav>
 
   </div>

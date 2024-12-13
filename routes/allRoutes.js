@@ -7,8 +7,32 @@ const AuthUser = require("../modals/authUser");
 var jwt = require("jsonwebtoken");
 
 const requireAuth = require("../middleware/middleware");
+const req = require("express/lib/request");
+const res = require("express/lib/response");
 
 //Level2
+
+const checkIfUser = (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (token) {
+    jwt.verify(token, "lll", async (err, decoded) => {
+      if (err) {
+        res.locals.user = null;
+        next();
+      } else {
+        const currentUser = await AuthUser.findById(decoded.id);
+        res.locals.user = currentUser;
+        next();
+      }
+    });
+  } else {
+    res.locals.user = null;
+    next();
+  }
+};
+
+router.get("*", checkIfUser);
+
 router.get("/", (req, res) => {
   res.render("wellcome");
 });

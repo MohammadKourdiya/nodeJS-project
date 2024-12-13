@@ -78,22 +78,28 @@
         <div class="cover-container  d-flex w-100 h-100 p-3 mx-auto flex-column">
 
             <%- include('./auth/header.ejs',{currentPage:"false"}) %>
+                <% if (user!==null) { %>
+                    <h1>
+                        <%=user.username %>
+                    </h1>
+                    <% } %>
+                        <main class="px-3">
+                            <h1>Wellcome to my <span class="fw-bold">X-System😊</span></h1>
+                            <p class="lead">Tohelp you with storing and organaizing the data created and collected
+                                by an
+                                organization.The data management process aim to make sure the data in corporate
+                                systems is
+                                accurate,available and accessible.</p>
+                            <p class="lead">
+                                <a href="/home" class="btn btn-lg btn-light fw-bold border-white bg-white">Dashboard</a>
+                                <a href="#" class="btn btn-lg  fw-bold border-white ">Contact Sales</a>
+                            </p>
 
-                <main class="px-3">
-                    <h1>Wellcome to my <span class="fw-bold">X-System😊</span></h1>
-                    <p class="lead">Tohelp you with storing and organaizing the data created and collected by an
-                        organization.The data management process aim to make sure the data in corporate systems is
-                        accurate,available and accessible.</p>
-                    <p class="lead">
-                        <a href="/home" class="btn btn-lg btn-light fw-bold border-white bg-white">Dashboard</a>
-                        <a href="#" class="btn btn-lg  fw-bold border-white ">Contact Sales</a>
-                    </p>
+                        </main>
 
-                </main>
+                        <footer class="mt-auto text-white-50">
 
-                <footer class="mt-auto text-white-50">
-
-                </footer>
+                        </footer>
         </div>
         <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
