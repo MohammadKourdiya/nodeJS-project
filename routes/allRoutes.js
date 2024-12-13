@@ -29,6 +29,13 @@ router.get("/signout", (req, res) => {
 
 router.post("/signup", async (req, res) => {
   try {
+    const isCurrentEmail = await AuthUser.findOne({ email: req.body.email });
+
+    if (isCurrentEmail) {
+      console.log("The email is already exist");
+      return res.redirect("/signup");
+    }
+
     const result = await AuthUser.create(req.body);
     console.log(result);
     res.redirect("/home");
