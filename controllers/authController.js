@@ -31,10 +31,11 @@ const post_signup = async (req, res) => {
     }
     //  create new user & login
     const newUser = await AuthUser.create(req.body);
-    var token = jwt.sign({ id: newUser._id }, "lll");
+    var token = jwt.sign({ id: newUser._id }, process.env.SECRET_KEY);
 
     res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
     res.json({ id: newUser._id });
+    location.assign("/home");
   } catch (err) {
     console.log(err);
   }
@@ -51,10 +52,10 @@ const post_login = async (req, res) => {
         loginUser.password == req.body.password;
 
       if (match) {
-        console.log("login successfully");
-        var token = jwt.sign({ id: loginUser._id }, "lll");
+        var token = jwt.sign({ id: loginUser._id }, process.env.SECRET_KEY);
         res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
         res.json({ id: loginUser._id });
+        location.assign("/home");
       } else {
         res.json({ passError: `inncorrect password for ${req.body.email}` });
       }
