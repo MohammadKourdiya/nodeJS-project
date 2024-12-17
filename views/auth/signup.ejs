@@ -95,29 +95,21 @@
             });
             const data = await res.json()
 
-            if (data.arrValidationError) {
-
-                data.arrValidationError[0].path == "password" ? passError.textContent = data.arrValidationError[0].msg : null
-                data.arrValidationError[1].path == "password" ? passError.textContent = data.arrValidationError[1].msg : null
-                data.arrValidationError[0].path == "email" ? emailError.textContent = data.arrValidationError[0].msg : null
-                data.arrValidationError[1].path == "email" ? emailError.textContent = data.arrValidationError[1].msg : null
-
-            }
-
             if (data.existEmail) {
                 emailError.textContent = "email is already exist"
             }
 
-
-
-
+            if (data.arrValidationError) {
+                data.arrValidationError[0].path == "password" ? passError.textContent = data.arrValidationError[0].msg : null
+                data.arrValidationError[1].path == "password" ? passError.textContent = data.arrValidationError[1].msg : null
+                data.arrValidationError[0].path == "email" ? emailError.textContent = data.arrValidationError[0].msg : null
+                data.arrValidationError[1].path == "email" ? emailError.textContent = data.arrValidationError[1].msg : null
+            }
             if (data.id) {
                 console.log(data.id)
                 location.assign("/home")
             }
         })
-
-
     </script>
     <script src="./js/bootstrap.bundle.min.js"></script>
 

@@ -8,25 +8,14 @@ var jwt = require("jsonwebtoken");
 
 const { requireAuth, checkIfUser } = require("../middleware/middleware");
 const { check, validationResult } = require("express-validator");
-
+const authController = require("../controllers/authController");
 //Level2
 
 router.get("*", checkIfUser);
 
-router.get("/", (req, res) => {
-  res.render("wellcome");
-});
-
-router.get("/login", (req, res) => {
-  res.render("auth/login.ejs");
-});
-router.get("/signup", (req, res) => {
-  res.render("auth/signup.ejs");
-});
-router.get("/signout", (req, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
-  res.redirect("/");
-});
+router.get("/login", authController.get_login);
+router.get("/signup", authController.get_signup);
+router.get("/signout", authController.get_signout);
 
 router.post(
   "/signup",
@@ -44,56 +33,14 @@ router.post(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\(\)_\+\-\=\[\]\{\};:'",<>\./?]).{8,}$/
       ),
   ],
-  async (req, res) => {
-    try {
-      //  check validation (email & password)
-      const objError = validationResult(req);
-
-      if (objError.errors.length > 0) {
-        return res.json({ arrValidationError: objError.errors });
-      }
-      //  check email is already exist
-      const isCurrentEmail = await AuthUser.findOne({ email: req.body.email });
-
-      if (isCurrentEmail) {
-        return res.json({ existEmail: "Email is already exist" });
-      }
-      //  create new user & login
-      const newUser = await AuthUser.create(req.body);
-      var token = jwt.sign({ id: newUser._id }, "lll");
-
-      res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
-      res.json({ id: newUser._id });
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  authController.post_signup
 );
 
-router.post("/login", async (req, res) => {
-  try {
-    const loginUser = await AuthUser.findOne({ email: req.body.email });
-    if (loginUser == null) {
-      res.json({ notFoundUser: "The user is not found in database" });
-    } else {
-      const match =
-        loginUser.email == req.body.email &&
-        loginUser.password == req.body.password;
+router.post("/login", authController.post_login);
 
-      if (match) {
-        console.log("login successfully");
-        var token = jwt.sign({ id: loginUser._id }, "lll");
-        res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
-        res.json({ id: loginUser._id });
-      } else {
-        res.json({ passError: `inncorrect password for ${req.body.email}` });
-      }
-    }
-  } catch (err) {
-    console.log(err);
-  }
+router.get("/", (req, res) => {
+  res.render("wellcome");
 });
-
 //router.post("/signup", (req, res) => {
 //AuthUser.create(req.body)
 //    .then((result) => {
