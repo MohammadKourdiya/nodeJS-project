@@ -40,11 +40,6 @@
         .cover-container {
             max-width: 42em;
         }
-
-        #passError,
-        #emailError {
-            color: red;
-        }
     </style>
 </head>
 
@@ -95,7 +90,7 @@
             passError.textContent = ""
             const res = await fetch("/signup", {
                 method: "POST",
-                body: JSON.stringify({ email: signupEmail.value.trim(), password: signupPassword.value.trim() }),
+                body: JSON.stringify({ username: exampleInputUsername.value, email: signupEmail.value.trim(), password: signupPassword.value.trim() }),
                 headers: { "Content-Type": "application/json" },
             });
             const data = await res.json()

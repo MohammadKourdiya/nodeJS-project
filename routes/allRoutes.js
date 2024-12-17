@@ -46,25 +46,24 @@ router.post(
   ],
   async (req, res) => {
     try {
+      //  check validation (email & password)
       const objError = validationResult(req);
 
       if (objError.errors.length > 0) {
         return res.json({ arrValidationError: objError.errors });
       }
-
+      //  check email is already exist
       const isCurrentEmail = await AuthUser.findOne({ email: req.body.email });
 
       if (isCurrentEmail) {
         return res.json({ existEmail: "Email is already exist" });
       }
-
+      //  create new user & login
       const newUser = await AuthUser.create(req.body);
       var token = jwt.sign({ id: newUser._id }, "lll");
 
       res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
       res.json({ id: newUser._id });
-      console.log("Email:", req.body.email); // طباعة البريد الإلكتروني
-      console.log("Password:", req.body.password); // طباعة كلمة المرور
     } catch (err) {
       console.log(err);
     }
@@ -75,7 +74,7 @@ router.post("/login", async (req, res) => {
   try {
     const loginUser = await AuthUser.findOne({ email: req.body.email });
     if (loginUser == null) {
-      console.log("user is not found in database");
+      res.json({ notFoundUser: "The user is not found in database" });
     } else {
       const match =
         loginUser.email == req.body.email &&
@@ -85,9 +84,9 @@ router.post("/login", async (req, res) => {
         console.log("login successfully");
         var token = jwt.sign({ id: loginUser._id }, "lll");
         res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
-        res.redirect("/home");
+        res.json({ id: loginUser._id });
       } else {
-        console.log("email or pass is wrong");
+        res.json({ passError: `inncorrect password for ${req.body.email}` });
       }
     }
   } catch (err) {

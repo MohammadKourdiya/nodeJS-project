@@ -45,6 +45,8 @@
         .cover-container {
             max-width: 42em;
         }
+
+       
     </style>
 </head>
 
@@ -61,16 +63,18 @@
                 <main class="px-3">
                     <h1>Login</h1>
 
-                    <form action="/login" method="post" style="max-width: 22em; margin: auto; text-align: start;">
+                    <form id="loginForm" action="/login" method="post"
+                        style="max-width: 22em; margin: auto; text-align: start;">
                         <div class="mb-3 ">
                             <label for="exampleInputEmail1" class="form-label fs-5">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" name="email">
-
+                            <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp"
+                                name="email">
+                            <p id="emailError"></p>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label fs-5">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                            <input type="password" class="form-control" id="loginPassword" name="password">
+                            <p id="passError"></p>
                         </div>
                         <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -85,9 +89,38 @@
 
                 </footer>
         </div>
-        
+
 
     </body>
+    <script>
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            emailError.textContent=""
+            passError.textContent=""
+            const res = await fetch("/login", {
+                method: "POST",
+                body: JSON.stringify({ email: loginEmail.value.trim(), password: loginPassword.value.trim() }),
+                headers: { "Content-Type": "application/json" },
+            });
+            const data = await res.json()
+
+            if (data.notFoundUser) {
+                emailError.textContent = data.notFoundUser
+            }
+
+
+            if (data.passError) {
+                passError.textContent = data.passError
+            }
+
+            if (data.id) {
+                location.assign("/home")
+            }
+
+        })
+
+
+    </script>
     <script src="./js/bootstrap.bundle.min.js"></script>
 
     <script src="./js/sidebars.js"></script>
