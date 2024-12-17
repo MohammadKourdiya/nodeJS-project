@@ -9,7 +9,7 @@ app.use(cookieParser());
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-
+app.use(express.json());
 //DELETE METHOD//
 
 var methodOverride = require("method-override");
