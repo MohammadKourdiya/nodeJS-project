@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.use(express.urlencoded({ extended: true }));
 const mongoose = require("mongoose");
 const allRoutes = require("./routes/allRoutes");

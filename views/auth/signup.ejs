@@ -40,6 +40,11 @@
         .cover-container {
             max-width: 42em;
         }
+
+        #passError,
+        #emailError {
+            color: red;
+        }
     </style>
 </head>
 
@@ -63,11 +68,13 @@
                         </label>
                         <input type="email" class="form-control" id="signupEmail" aria-describedby="emailHelp"
                             name="email" required />
+                        <p id="emailError"></p>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Password :
                         </label>
                         <input type="password" class="form-control" id="signupPassword" name="password" required />
+                        <p id="passError"></p>
                     </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1" />
@@ -78,12 +85,14 @@
             </main>
 
             <footer class="mt-auto text-white-50">
-                <p>Designed and developed by Ali Hassan © 2023</p>
+                <p>Designed and developed by Mohammad Kourdiya © 2024</p>
             </footer>
     </div>
     <script>
         signupForm.addEventListener("submit", async (e) => {
             e.preventDefault();
+            emailError.textContent = ""
+            passError.textContent = ""
             const res = await fetch("/signup", {
                 method: "POST",
                 body: JSON.stringify({ email: signupEmail.value.trim(), password: signupPassword.value.trim() }),
@@ -92,12 +101,16 @@
             const data = await res.json()
 
             if (data.arrValidationError) {
-                console.log(data.arrValidationError)
+
+                data.arrValidationError[0].path == "password" ? passError.textContent = data.arrValidationError[0].msg : null
+                data.arrValidationError[1].path == "password" ? passError.textContent = data.arrValidationError[1].msg : null
+                data.arrValidationError[0].path == "email" ? emailError.textContent = data.arrValidationError[0].msg : null
+                data.arrValidationError[1].path == "email" ? emailError.textContent = data.arrValidationError[1].msg : null
+
             }
 
             if (data.existEmail) {
-
-                console.log(data.existEmail)
+                emailError.textContent = "email is already exist"
             }
 
 
